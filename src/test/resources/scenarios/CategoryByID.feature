@@ -1,0 +1,1 @@
+Feature: GET a category by ID

@@ -1,0 +1,1 @@
+Feature: GET IDs of Allegro categories
