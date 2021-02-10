@@ -1,7 +1,6 @@
 package scenarios;
 
 import cucumber.api.DataTable;
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -12,7 +11,7 @@ import org.hamcrest.Matchers;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static org.hamcrest.Matchers.hasSize;
 
 public class StepsDefinition {
     private String authURL = "https://allegro.pl/auth/oauth/token";
@@ -44,11 +43,19 @@ public class StepsDefinition {
                 "application/vnd.allegro.public.v1+json");
     }
 
+    @Given("^User is not authenticated$")
+    public void userIsNotAuthenticated() {
+        accessToken = null;
+        request = RestAssured.given();
+        request.headers(
+                "Accept",
+                "application/vnd.allegro.public.v1+json");
+    }
+
     @When("^User call GET IDs of Allegro categories$")
     public void userCallGETIDsOfAllegroCategories() {
         response = request.get("/sale/categories")
                 .then()
-                .statusCode(200)
                 .extract()
                 .response();
     }
@@ -61,6 +68,7 @@ public class StepsDefinition {
             String categoryId = element.get(1);
             response
                     .then()
+                    .statusCode(200)
                     .body("categories", Matchers.hasItem(
                             Matchers.allOf(
                                     Matchers.allOf(
@@ -72,11 +80,34 @@ public class StepsDefinition {
         });
     }
 
-    @And("^Response matches Allegro Categories IDs JSON Schema$")
-    public void responseMatchesAllegroCategoriesIDsJSONSchema() {
+    @Then("^Receives unauthorized error$")
+    public void receivesUnauthorizedError() {
         response
                 .then()
-                .assertThat()
-                .body(matchesJsonSchemaInClasspath("AllegroCategoriesIDsSchema.json"));
+                .statusCode(401);
+    }
+
+    @When("^User call GET IDs of Allegro categories with (\\d+) param$")
+    public void userCallGETIDsOfAllegroCategoriesWithCorrectParentIDParam(String parentID) {
+        response = request.queryParam("parent.id", parentID)
+                .get("/sale/categories")
+                .then()
+                .extract()
+                .response();
+    }
+
+    @Then("^Receive (\\d+) of categories$")
+    public void receiveAmountOfCategories(String amount) {
+        response
+                .then()
+                .statusCode(200)
+                .body("categories", hasSize(Integer.parseInt(amount)));
+    }
+
+    @Then("^Receive error that category with the given ID does not exist$")
+    public void receiveErrorThatCategoryWithTheGivenIDDoesNotExist() {
+        response
+                .then()
+                .statusCode(404);
     }
 }

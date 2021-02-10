@@ -1,6 +1,6 @@
 Feature: GET IDs of Allegro categories
 
- Scenario: Get IDs of Allegro categories
+ Scenario: Get IDs of Allegro categories - user is authenticated
     Given User is authenticated
     When User call GET IDs of Allegro categories
     Then Receive all following categories with ids:
@@ -17,4 +17,31 @@ Feature: GET IDs of Allegro categories
      | Supermarket        | 258832                                |
      | Uroda              | 1429                                  |
      | Zdrowie            | 121882                                |
-   And Response matches Allegro Categories IDs JSON Schema
+   #Define here names and ids of Allegro categories
+
+  Scenario: Get IDs of Allegro categories - user is not authenticated
+    Given User is not authenticated
+    When User call GET IDs of Allegro categories
+    Then Receives unauthorized error
+
+  Scenario Outline: Get IDs of Allegro categories - correct parent ID param
+    Given User is authenticated
+    When User call GET IDs of Allegro categories with <parentID> param
+    Then Receive <amount> of categories
+    Examples:
+      | parentID | amount |
+      | 1        | 5      |
+      | 2        | 23     |
+      | 3        | 12     |
+    #Define here parentID and amount od categories in response
+
+  Scenario Outline: Get IDs of Allegro categories - incorrect parent ID param
+    Given User is authenticated
+    When User call GET IDs of Allegro categories with <parentID> param
+    Then Receive error that category with the given ID does not exist
+    Examples:
+      | parentID |
+      | 1111111  |
+      | 2222222  |
+      | 3333333  |
+    #Define here incorrect values of parent IDs for categories
