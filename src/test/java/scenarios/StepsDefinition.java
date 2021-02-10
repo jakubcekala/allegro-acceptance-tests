@@ -1,6 +1,7 @@
 package scenarios;
 
 import cucumber.api.DataTable;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -11,8 +12,9 @@ import org.hamcrest.Matchers;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
-public class StepDefinitions {
+public class StepsDefinition {
     private String authURL = "https://allegro.pl/auth/oauth/token";
     private String accessToken;
     private String clientID = System.getenv("ALLEGRO_CLIENT_ID");
@@ -68,5 +70,13 @@ public class StepDefinitions {
                             )
                     ));
         });
+    }
+
+    @And("^Response matches Allegro Categories IDs JSON Schema$")
+    public void responseMatchesAllegroCategoriesIDsJSONSchema() {
+        response
+                .then()
+                .assertThat()
+                .body(matchesJsonSchemaInClasspath("AllegroCategoriesIDsSchema.json"));
     }
 }

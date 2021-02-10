@@ -17,3 +17,4 @@ Feature: GET IDs of Allegro categories
      | Supermarket        | 258832                                |
      | Uroda              | 1429                                  |
      | Zdrowie            | 121882                                |
+   And Response matches Allegro Categories IDs JSON Schema
