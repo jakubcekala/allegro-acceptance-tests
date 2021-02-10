@@ -11,7 +11,7 @@ import org.hamcrest.Matchers;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 
 public class StepsDefinition {
     private String authURL = "https://allegro.pl/auth/oauth/token";
@@ -109,5 +109,21 @@ public class StepsDefinition {
         response
                 .then()
                 .statusCode(404);
+    }
+
+    @When("^User call GET a category by ID with (\\d+)$")
+    public void userCallGETACategoryByIDWithIdValue(String idValue) {
+        response = request.get("/sale/categories/" + idValue)
+                .then()
+                .extract()
+                .response();
+    }
+
+    @Then("User Receives category ([^\"]*)$")
+    public void userReceivesCategoryCategoryName(String categoryName) {
+        response
+                .then()
+                .statusCode(200)
+                .body("name", equalTo(categoryName));
     }
 }
