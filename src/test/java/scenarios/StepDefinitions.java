@@ -1,10 +1,14 @@
 package scenarios;
 
+import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.hamcrest.Matchers;
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
@@ -45,5 +49,24 @@ public class StepDefinitions {
                 .statusCode(200)
                 .extract()
                 .response();
+    }
+
+    @Then("^Receive all following categories with ids:$")
+    public void receiveAllFollowingCategoriesWithIds(DataTable dataTable) {
+        List<List<String>> data = dataTable.raw();
+        data.forEach((element) -> {
+            String categoryName = element.get(0);
+            String categoryId = element.get(1);
+            response
+                    .then()
+                    .body("categories", Matchers.hasItem(
+                            Matchers.allOf(
+                                    Matchers.allOf(
+                                            Matchers.hasEntry("id", categoryId),
+                                            Matchers.hasEntry("name", categoryName)
+                                    )
+                            )
+                    ));
+        });
     }
 }
