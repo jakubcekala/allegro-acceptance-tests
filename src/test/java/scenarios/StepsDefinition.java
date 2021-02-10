@@ -60,6 +60,15 @@ public class StepsDefinition {
                 .response();
     }
 
+    @When("^User call GET IDs of Allegro categories with (\\d+) param$")
+    public void userCallGETIDsOfAllegroCategoriesWithCorrectParentIDParam(String parentID) {
+        response = request.queryParam("parent.id", parentID)
+                .get("/sale/categories")
+                .then()
+                .extract()
+                .response();
+    }
+
     @Then("^Receive all following categories with ids:$")
     public void receiveAllFollowingCategoriesWithIds(DataTable dataTable) {
         List<List<String>> data = dataTable.raw();
@@ -85,15 +94,6 @@ public class StepsDefinition {
         response
                 .then()
                 .statusCode(401);
-    }
-
-    @When("^User call GET IDs of Allegro categories with (\\d+) param$")
-    public void userCallGETIDsOfAllegroCategoriesWithCorrectParentIDParam(String parentID) {
-        response = request.queryParam("parent.id", parentID)
-                .get("/sale/categories")
-                .then()
-                .extract()
-                .response();
     }
 
     @Then("^Receive (\\d+) of categories$")
