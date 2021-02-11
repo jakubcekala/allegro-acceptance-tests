@@ -1,6 +1,7 @@
 package steps;
 
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -8,16 +9,17 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 public class StepsDefinition {
-    private String authURL = "https://allegro.pl/auth/oauth/token";
+    private final String authURL = "https://allegro.pl/auth/oauth/token";
     private String accessToken;
-    private String clientID = System.getenv("ALLEGRO_CLIENT_ID");
-    private String clientSecret = System.getenv("ALLEGRO_CLIENT_SECRET");
+    private final String clientID = System.getenv("ALLEGRO_CLIENT_ID");
+    private final String clientSecret = System.getenv("ALLEGRO_CLIENT_SECRET");
 
     private RequestSpecification request;
     private Response response;
@@ -121,11 +123,50 @@ public class StepsDefinition {
                 .response();
     }
 
-    @Then("User receives category ([^\"]*)$")
+    @Then("^User receives category ([^\"]*)$")
     public void userReceivesCategoryCategoryName(String categoryName) {
         response
                 .then()
                 .statusCode(200)
                 .body("name", equalTo(categoryName));
+    }
+
+    @When("^User calls GET parameters supported by a category with ID value (\\d+)$")
+    public void userCallsGETParametersSupportedByACategoryWithIDValueIdValue(String idValue) {
+        response = request.get("/sale/categories/" + idValue + "/parameters")
+                .then()
+                .extract()
+                .response();
+    }
+
+    @Then("^Receives (\\d+) parameters$")
+    public void receivesParametersAmountParameters(String parametersAmount) {
+        response
+                .then()
+                .statusCode(200)
+                .body(
+                        "parameters", hasSize(
+                                Integer.parseInt(parametersAmount)
+                        )
+                );
+    }
+
+    @And("^There are following categories: ([^\"]*)$")
+    public void thereAreFollowingCategoriesCategories(String categoriesString) {
+        String[] categories = categoriesString.split("\\s*,\\s*");
+        for (String category : categories) {
+            response
+                    .then()
+                    .statusCode(200)
+                    .body(
+                            "parameters", hasItem(
+                                    allOf(
+                                            hasEntry("name", category)
+                                    )
+
+
+                            )
+                    );
+        }
     }
 }
