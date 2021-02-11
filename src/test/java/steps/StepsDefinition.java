@@ -162,8 +162,6 @@ public class StepsDefinition {
                                     allOf(
                                             hasEntry("name", category)
                                     )
-
-
                             )
                     );
         }
