@@ -16,3 +16,7 @@ ALLEGRO_CLIENT_SECRET - client secret from https://apps.developer.allegro.pl/
 - Open terminal window
 - Go to the root project directory
 - Run command `mvn test`
+
+![img.png](img.png)
+
+After successfully test running, test report will be generated. To see it, please click on generated link.

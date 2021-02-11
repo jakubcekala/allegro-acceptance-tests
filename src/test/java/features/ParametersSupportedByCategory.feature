@@ -1,6 +1,6 @@
 Feature: GET parameters supported by category
 
-  Scenario Outline: GET parameters supported by category - user is authorized
+  Scenario Outline: GET parameters supported by category - user is authenticated
     Given User is authenticated
     When User calls GET parameters supported by a category with ID value <idValue>
     Then Receives <parametersAmount> parameters
@@ -13,7 +13,7 @@ Feature: GET parameters supported by category
       | 4       | 3                | Stan, Waga produktu z opakowaniem jednostkowym, EAN |
     #Define here id of categories and amount of parameters
 
-  Scenario Outline: GET parameters supported by category - user is not authorized
+  Scenario Outline: GET parameters supported by category - user is not authenticated
     Given User is not authenticated
     When User calls GET parameters supported by a category with ID value <idValue>
     Then Receives unauthorized error
