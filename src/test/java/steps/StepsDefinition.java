@@ -52,7 +52,7 @@ public class StepsDefinition {
                 "application/vnd.allegro.public.v1+json");
     }
 
-    @When("^User call GET IDs of Allegro categories$")
+    @When("^User calls GET IDs of Allegro categories$")
     public void userCallGETIDsOfAllegroCategories() {
         response = request.get("/sale/categories")
                 .then()
@@ -60,7 +60,7 @@ public class StepsDefinition {
                 .response();
     }
 
-    @When("^User call GET IDs of Allegro categories with (\\d+) param$")
+    @When("^User calls GET IDs of Allegro categories with (\\d+) param$")
     public void userCallGETIDsOfAllegroCategoriesWithCorrectParentIDParam(String parentID) {
         response = request.queryParam("parent.id", parentID)
                 .get("/sale/categories")
@@ -69,7 +69,7 @@ public class StepsDefinition {
                 .response();
     }
 
-    @Then("^Receive all following categories with ids:$")
+    @Then("^Receives all following categories with ids:$")
     public void receiveAllFollowingCategoriesWithIds(DataTable dataTable) {
         List<List<String>> data = dataTable.asLists();
         data.forEach((element) -> {
@@ -98,7 +98,7 @@ public class StepsDefinition {
                 .statusCode(401);
     }
 
-    @Then("^Receive (\\d+) of categories$")
+    @Then("^Receives (\\d+) of categories$")
     public void receiveAmountOfCategories(String amount) {
         response
                 .then()
@@ -106,14 +106,14 @@ public class StepsDefinition {
                 .body("categories", hasSize(Integer.parseInt(amount)));
     }
 
-    @Then("^Receive error that category with the given ID does not exist$")
+    @Then("^Receives error that category with the given ID does not exist$")
     public void receiveErrorThatCategoryWithTheGivenIDDoesNotExist() {
         response
                 .then()
                 .statusCode(404);
     }
 
-    @When("^User call GET a category by ID with (\\d+)$")
+    @When("^User calls GET a category by ID with (\\d+)$")
     public void userCallGETACategoryByIDWithIdValue(String idValue) {
         response = request.get("/sale/categories/" + idValue)
                 .then()
@@ -121,7 +121,7 @@ public class StepsDefinition {
                 .response();
     }
 
-    @Then("User Receives category ([^\"]*)$")
+    @Then("User receives category ([^\"]*)$")
     public void userReceivesCategoryCategoryName(String categoryName) {
         response
                 .then()

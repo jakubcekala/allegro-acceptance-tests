@@ -1,0 +1,17 @@
+{
+  "id": "12",
+  "leaf": true,
+  "name": "Pozostałe",
+  "options": {
+    "advertisement": true,
+    "advertisementPriceOptional": true,
+    "variantsByColorPatternAllowed": true,
+    "offersWithProductPublicationEnabled": true,
+    "productCreationEnabled": true,
+    "productEANRequired": true,
+    "customParametersEnabled": true
+  },
+  "parent": {
+    "id": "709"
+  }
+}

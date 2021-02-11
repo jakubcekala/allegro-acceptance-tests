@@ -2,8 +2,8 @@ Feature: GET a category by ID
 
   Scenario Outline: GET a category by ID - user is authenticated
     Given User is authenticated
-    When User call GET a category by ID with <idValue>
-    Then User Receives category <categoryName>
+    When User calls GET a category by ID with <idValue>
+    Then User receives category <categoryName>
     Examples:
       | idValue | categoryName |
       | 1       | Muzyka       |
@@ -12,7 +12,7 @@ Feature: GET a category by ID
 
   Scenario Outline: GET a category by ID - user is not authenticated
     Given User is not authenticated
-    When User call GET a category by ID with <idValue>
+    When User calls GET a category by ID with <idValue>
     Then Receives unauthorized error
     Examples:
       | idValue |
@@ -21,8 +21,8 @@ Feature: GET a category by ID
 
   Scenario Outline: Get a category by ID - incorrect id
     Given User is authenticated
-    When User call GET a category by ID with <idValue>
-    Then Receive error that category with the given ID does not exist
+    When User calls GET a category by ID with <idValue>
+    Then Receives error that category with the given ID does not exist
     Examples:
       | idValue |
       | 1111111 |

@@ -1,0 +1,32 @@
+{
+  "parameters": [
+    {
+      "id": "202877",
+      "name": "Liczba rdzeni procesora",
+      "type": "integer",
+      "required": false,
+      "requiredForProduct": false,
+      "unit": null,
+      "options": {
+        "variantsAllowed": true,
+        "variantsEqual": false,
+        "ambiguousValueId": null,
+        "dependsOnParameterId": "202870",
+        "requiredDependsOnValueIds": [
+          "202870_1"
+        ],
+        "displayDependsOnValueIds": [
+          "202870_1",
+          "202870_2"
+        ],
+        "describesProduct": false,
+        "customValuesEnabled": false
+      },
+      "restrictions": {
+        "min": 0,
+        "max": 1000000,
+        "range": false
+      }
+    }
+  ]
+}

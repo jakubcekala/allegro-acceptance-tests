@@ -2,8 +2,8 @@ Feature: GET IDs of Allegro categories
 
  Scenario: Get IDs of Allegro categories - user is authenticated
     Given User is authenticated
-    When User call GET IDs of Allegro categories
-    Then Receive all following categories with ids:
+    When User calls GET IDs of Allegro categories
+    Then Receives all following categories with ids:
      | Dom i Ogród        | 5                                     |
      | Dziecko            | 11763                                 |
      | Elektronika        | 42540aec-367a-4e5e-b411-17c09b08e41f  |
@@ -21,13 +21,13 @@ Feature: GET IDs of Allegro categories
 
   Scenario: Get IDs of Allegro categories - user is not authenticated
     Given User is not authenticated
-    When User call GET IDs of Allegro categories
+    When User calls GET IDs of Allegro categories
     Then Receives unauthorized error
 
   Scenario Outline: Get IDs of Allegro categories - correct parent ID param
     Given User is authenticated
-    When User call GET IDs of Allegro categories with <parentID> param
-    Then Receive <amount> of categories
+    When User calls GET IDs of Allegro categories with <parentID> param
+    Then Receives <amount> of categories
     Examples:
       | parentID | amount |
       | 1        | 5      |
@@ -37,8 +37,8 @@ Feature: GET IDs of Allegro categories
 
   Scenario Outline: Get IDs of Allegro categories - incorrect parent ID param
     Given User is authenticated
-    When User call GET IDs of Allegro categories with <parentID> param
-    Then Receive error that category with the given ID does not exist
+    When User calls GET IDs of Allegro categories with <parentID> param
+    Then Receives error that category with the given ID does not exist
     Examples:
       | parentID |
       | 1111111  |
