@@ -71,6 +71,22 @@ public class StepsDefinition {
                 .response();
     }
 
+    @When("^User calls GET a category by ID with (\\d+)$")
+    public void userCallGETACategoryByIDWithIdValue(String idValue) {
+        response = request.get("/sale/categories/" + idValue)
+                .then()
+                .extract()
+                .response();
+    }
+
+    @When("^User calls GET parameters supported by a category with ID value (\\d+)$")
+    public void userCallsGETParametersSupportedByACategoryWithIDValueIdValue(String idValue) {
+        response = request.get("/sale/categories/" + idValue + "/parameters")
+                .then()
+                .extract()
+                .response();
+    }
+
     @Then("^Receives all following categories with ids:$")
     public void receiveAllFollowingCategoriesWithIds(DataTable dataTable) {
         List<List<String>> data = dataTable.asLists();
@@ -115,28 +131,12 @@ public class StepsDefinition {
                 .statusCode(404);
     }
 
-    @When("^User calls GET a category by ID with (\\d+)$")
-    public void userCallGETACategoryByIDWithIdValue(String idValue) {
-        response = request.get("/sale/categories/" + idValue)
-                .then()
-                .extract()
-                .response();
-    }
-
     @Then("^User receives category ([^\"]*)$")
     public void userReceivesCategoryCategoryName(String categoryName) {
         response
                 .then()
                 .statusCode(200)
                 .body("name", equalTo(categoryName));
-    }
-
-    @When("^User calls GET parameters supported by a category with ID value (\\d+)$")
-    public void userCallsGETParametersSupportedByACategoryWithIDValueIdValue(String idValue) {
-        response = request.get("/sale/categories/" + idValue + "/parameters")
-                .then()
-                .extract()
-                .response();
     }
 
     @Then("^Receives (\\d+) parameters$")
