@@ -33,7 +33,7 @@ Feature: GET IDs of Allegro categories
       | 1        | 5      |
       | 2        | 23     |
       | 3        | 12     |
-    #Define here parentID and amount od categories in response
+    #Define here parentID and amount of categories in response
 
   Scenario Outline: Get IDs of Allegro categories - incorrect parent ID param
     Given User is authenticated
