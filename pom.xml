@@ -7,10 +7,10 @@
     <groupId>allegro-acceptance-tests</groupId>
     <artifactId>allegro-acceptance-tests</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <build>
-        <plugins>
-        </plugins>
-    </build>
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
     <dependencies>
         <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java -->
         <dependency>
